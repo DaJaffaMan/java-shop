@@ -30,18 +30,15 @@ public class App {
 
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(ShopConfig.class);
-        // Get stock handler example
         StockHandler stockHandler = context.getBean(StockHandler.class);
+        PriceHandler priceHandler = context.getBean(PriceHandler.class);
+        ProductHandler productHandler = context.getBean(ProductHandler.class);
 
-        // TODO remove when using DI
-        ProductDao productDao = new ProductDao(connection);
+        get("/get/stock/:product", stockHandler);
 
-        // TODO register handlers using beans
-        get("/get/stock/:product", new StockHandler(productDao));
+        get("/get/price/:product", priceHandler);
 
-        get("/get/price/:product", new PriceHandler(productDao));
-
-        post("/add/:product/:stock/:price", new ProductHandler(productDao));
+        post("/add/:product/:stock/:price", productHandler);
     }
 
 }

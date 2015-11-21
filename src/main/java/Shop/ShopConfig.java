@@ -23,6 +23,30 @@ public class ShopConfig {
         Class.forName("org.gjt.mm.mysql.Driver");
         // Get user from -Ddb.user property or default to root
         // Get password from -Ddb.password property or default to password
-        return DriverManager.getConnection(jdbcUrl, System.getProperty("db.user", "root"), System.getProperty("db.password", "password"));
+        return DriverManager.getConnection(jdbcUrl, System.getProperty("db.user", "user"), System.getProperty("db.password", "password"));
+    }
+
+    @Bean
+    public ProductDao productDao(Connection connection) {
+
+        return new ProductDao(connection);
+    }
+
+    @Bean
+    public StockHandler stockHandler(ProductDao productDao) throws ClassNotFoundException {
+
+        return new StockHandler(productDao);
+    }
+
+    @Bean
+    public PriceHandler priceHandler(ProductDao productDao) throws ClassNotFoundException {
+
+        return new PriceHandler(productDao);
+    }
+
+    @Bean
+    public ProductHandler productHandler(ProductDao productDao) throws ClassNotFoundException {
+
+        return new ProductHandler(productDao);
     }
 }
