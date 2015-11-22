@@ -1,5 +1,9 @@
-package Shop;
+package Shop.config;
 
+import Shop.handlers.PriceHandler;
+import Shop.handlers.ProductHandler;
+import Shop.handlers.StockHandler;
+import Shop.product.ProductDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

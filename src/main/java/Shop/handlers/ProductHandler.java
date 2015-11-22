@@ -1,5 +1,7 @@
-package Shop;
+package Shop.handlers;
 
+import Shop.Product;
+import Shop.ProductDao;
 import spark.Request;
 import spark.Response;
 import spark.Route;

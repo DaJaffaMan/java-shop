@@ -1,4 +1,4 @@
-package Shop;
+package Shop.product;
 
 /**
  * Created by Jack on 14/11/2015.

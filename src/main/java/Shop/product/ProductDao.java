@@ -1,12 +1,9 @@
-package Shop;
+package Shop.product;
 
+import Shop.product.Product;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.sql.*;
 
 /**
