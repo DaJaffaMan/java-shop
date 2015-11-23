@@ -1,5 +1,9 @@
-package Shop;
+package Shop.unit;
 
+import Shop.config.ShopConfig;
+import Shop.handlers.PriceHandler;
+import Shop.product.Product;
+import Shop.product.ProductDao;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +23,7 @@ import static org.junit.Assert.*;
  * Created by Jack on 16/11/2015.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class StockHandlerTest {
+public class PriceHandlerTest {
 
     @Mock
     private Request request;
@@ -28,29 +32,20 @@ public class StockHandlerTest {
 
     ApplicationContext context = new AnnotationConfigApplicationContext(ShopConfig.class);
     ProductDao productDao = context.getBean(ProductDao.class);
-    StockHandler stockHandler = context.getBean(StockHandler.class);
+    PriceHandler priceHandler = context.getBean(PriceHandler.class);
+
 
     @Before
     public void setup() {
+        ProductDao productDao = context.getBean(ProductDao.class);
         productDao.addProduct(new Product("banana", 1, 1.00));
-        productDao.addProduct(new Product("apple", 0, 0.00));
     }
 
     @Test
-    public void testGetItemWithStock() throws Exception {
+    public void testGetItemPrice() throws Exception {
         when(request.params(":product")).thenReturn("banana");
+        String responseGiven = priceHandler.handle(request, response).toString();
 
-        String responseGiven = stockHandler.handle(request, response).toString();
-
-        assertEquals("banana:1", responseGiven);
-    }
-
-    @Test
-    public void testGetItemWithoutStock() throws Exception {
-        when(request.params(":product")).thenReturn("apple");
-
-        String responseGiven = stockHandler.handle(request, response).toString();
-
-        assertEquals("apple:0", responseGiven);
+        assertEquals("banana:£1.00", responseGiven);
     }
 }

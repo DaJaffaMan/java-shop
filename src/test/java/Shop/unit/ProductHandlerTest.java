@@ -1,7 +1,9 @@
-package Shop;
+package Shop.unit;
 
 
-import org.junit.Before;
+import Shop.config.ShopConfig;
+import Shop.handlers.ProductHandler;
+import Shop.product.ProductDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

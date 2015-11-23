@@ -1,11 +1,9 @@
 package Shop.handlers;
 
-import Shop.ProductDao;
+import Shop.product.ProductDao;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-
-import java.sql.Connection;
 
 /**
  * Created by Jack on 16/11/2015.

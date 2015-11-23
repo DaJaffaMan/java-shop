@@ -1,11 +1,10 @@
 package Shop.handlers;
 
-import Shop.ProductDao;
+import Shop.product.ProductDao;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.sql.Connection;
 import java.text.DecimalFormat;
 
 /**

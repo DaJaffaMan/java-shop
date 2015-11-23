@@ -3,15 +3,16 @@ package Shop;
 import static spark.Spark.*;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.HashMap;
 import java.util.Map;
 
+import Shop.config.HandlerConfig;
+import Shop.config.ShopConfig;
+import Shop.handlers.PriceHandler;
+import Shop.handlers.ProductHandler;
+import Shop.handlers.StockHandler;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import spark.Request;
-import spark.Response;
-import spark.Route;
 
 /**
  * Created by jack on 28/10/15.
@@ -29,7 +30,7 @@ public class App {
     static Connection connection;
 
     public static void main(String[] args) {
-        ApplicationContext context = new AnnotationConfigApplicationContext(ShopConfig.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(ShopConfig.class, HandlerConfig.class);
         StockHandler stockHandler = context.getBean(StockHandler.class);
         PriceHandler priceHandler = context.getBean(PriceHandler.class);
         ProductHandler productHandler = context.getBean(ProductHandler.class);

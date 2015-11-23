@@ -35,22 +35,4 @@ public class ShopConfig {
 
         return new ProductDao(connection);
     }
-
-    @Bean
-    public StockHandler stockHandler(ProductDao productDao) throws ClassNotFoundException {
-
-        return new StockHandler(productDao);
-    }
-
-    @Bean
-    public PriceHandler priceHandler(ProductDao productDao) throws ClassNotFoundException {
-
-        return new PriceHandler(productDao);
-    }
-
-    @Bean
-    public ProductHandler productHandler(ProductDao productDao) throws ClassNotFoundException {
-
-        return new ProductHandler(productDao);
-    }
 }
