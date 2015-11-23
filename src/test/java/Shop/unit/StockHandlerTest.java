@@ -1,5 +1,6 @@
 package Shop.unit;
 
+import Shop.config.HandlerConfig;
 import Shop.config.ShopConfig;
 import Shop.handlers.StockHandler;
 import Shop.product.Product;
@@ -30,20 +31,19 @@ public class StockHandlerTest {
     @Mock
     private Response response;
 
-    ApplicationContext context = new AnnotationConfigApplicationContext(ShopConfig.class);
-    ProductDao productDao = context.getBean(ProductDao.class);
+    ApplicationContext context = new AnnotationConfigApplicationContext(HandlerConfig.class, ShopConfig.class);
     StockHandler stockHandler = context.getBean(StockHandler.class);
 
     @Before
     public void setup() {
+        ProductDao productDao = context.getBean(ProductDao.class);
         productDao.addProduct(new Product("banana", 1, 1.00));
-        productDao.addProduct(new Product("apple", 0, 0.00));
+        productDao.addProduct(new Product("apple", 0, 1.00));
     }
 
     @Test
     public void testGetItemWithStock() throws Exception {
         when(request.params(":product")).thenReturn("banana");
-
         String responseGiven = stockHandler.handle(request, response).toString();
 
         assertEquals("banana:1", responseGiven);
@@ -52,7 +52,6 @@ public class StockHandlerTest {
     @Test
     public void testGetItemWithoutStock() throws Exception {
         when(request.params(":product")).thenReturn("apple");
-
         String responseGiven = stockHandler.handle(request, response).toString();
 
         assertEquals("apple:0", responseGiven);

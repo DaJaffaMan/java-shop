@@ -1,5 +1,6 @@
 package Shop.unit;
 
+import Shop.config.HandlerConfig;
 import Shop.config.ShopConfig;
 import Shop.handlers.PriceHandler;
 import Shop.product.Product;
@@ -30,8 +31,7 @@ public class PriceHandlerTest {
     @Mock
     private Response response;
 
-    ApplicationContext context = new AnnotationConfigApplicationContext(ShopConfig.class);
-    ProductDao productDao = context.getBean(ProductDao.class);
+    ApplicationContext context = new AnnotationConfigApplicationContext(HandlerConfig.class, ShopConfig.class);
     PriceHandler priceHandler = context.getBean(PriceHandler.class);
 
 

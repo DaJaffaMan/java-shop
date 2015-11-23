@@ -16,7 +16,7 @@ public class ShopConfig {
     @Bean
     public String jdbcUrl() {
         // Get host from -Ddb.host property or default to localhost
-        return String.format("jdbc:mysql://%s/Shop", System.getProperty("db.host", "localhost"));
+        return String.format("jdbc:mysql://%s/Shop", System.getProperty("db.host", "127.0.0.1"));
     }
 
     @Bean
@@ -24,7 +24,7 @@ public class ShopConfig {
         Class.forName("org.gjt.mm.mysql.Driver");
         // Get user from -Ddb.user property or default to root
         // Get password from -Ddb.password property or default to password
-        return DriverManager.getConnection(jdbcUrl, System.getProperty("db.user", "user"), System.getProperty("db.password", "password"));
+        return DriverManager.getConnection(jdbcUrl, System.getProperty("db.user", "root"), System.getProperty("db.password", "password"));
     }
 
     @Bean

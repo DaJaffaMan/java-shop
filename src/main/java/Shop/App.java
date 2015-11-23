@@ -17,8 +17,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class App {
 
-    static Connection connection;
-
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(ShopConfig.class, HandlerConfig.class);
         StockHandler stockHandler = context.getBean(StockHandler.class);

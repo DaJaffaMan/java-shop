@@ -1,6 +1,7 @@
 package Shop.unit;
 
 
+import Shop.config.HandlerConfig;
 import Shop.config.ShopConfig;
 import Shop.handlers.ProductHandler;
 import Shop.product.ProductDao;
@@ -29,10 +30,9 @@ public class ProductHandlerTest {
     @Mock
     private Response response;
 
-    ApplicationContext context = new AnnotationConfigApplicationContext(ShopConfig.class);
+    ApplicationContext context = new AnnotationConfigApplicationContext(HandlerConfig.class, ShopConfig.class);
     ProductDao productDao = context.getBean(ProductDao.class);
     ProductHandler productHandler = context.getBean(ProductHandler.class);
-
 
     @Test
     public void testAddItem() throws Exception {
