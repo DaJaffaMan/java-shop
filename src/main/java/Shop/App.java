@@ -3,8 +3,6 @@ package Shop;
 import static spark.Spark.*;
 
 import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
 
 import Shop.config.HandlerConfig;
 import Shop.config.ShopConfig;
@@ -18,14 +16,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * Created by jack on 28/10/15.
  */
 public class App {
-
-    static int bananaStock = 10;
-    static int appleStock = 10;
-
-    static int customerApples = 0;
-    static int customerBananas = 0;
-
-    static Map<Object, Object> basket = new HashMap<>();
 
     static Connection connection;
 

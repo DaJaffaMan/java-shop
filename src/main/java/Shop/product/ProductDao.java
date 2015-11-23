@@ -1,6 +1,5 @@
 package Shop.product;
 
-import Shop.product.Product;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;

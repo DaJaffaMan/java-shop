@@ -4,8 +4,7 @@ import Shop.handlers.PriceHandler;
 import Shop.handlers.ProductHandler;
 import Shop.handlers.StockHandler;
 import Shop.product.ProductDao;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import org.springframework.context.annotation.Bean;
 
 /**
