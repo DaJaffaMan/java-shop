@@ -5,17 +5,12 @@ import Shop.handlers.ProductHandler;
 import Shop.handlers.StockHandler;
 import Shop.product.ProductDao;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 /**
  * Created by Jack on 22/11/2015.
  */
 public class HandlerConfig {
-
-    ApplicationContext context = new AnnotationConfigApplicationContext(ShopConfig.class);
-
 
     @Bean
     public StockHandler stockHandler(ProductDao productDao) throws ClassNotFoundException {

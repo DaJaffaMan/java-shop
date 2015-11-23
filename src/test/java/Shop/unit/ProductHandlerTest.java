@@ -31,7 +31,6 @@ public class ProductHandlerTest {
     private Response response;
 
     ApplicationContext context = new AnnotationConfigApplicationContext(HandlerConfig.class, ShopConfig.class);
-    ProductDao productDao = context.getBean(ProductDao.class);
     ProductHandler productHandler = context.getBean(ProductHandler.class);
 
     @Test

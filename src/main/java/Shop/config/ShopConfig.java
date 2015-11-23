@@ -16,7 +16,7 @@ public class ShopConfig {
     @Bean
     public String jdbcUrl() {
         // Get host from -Ddb.host property or default to localhost
-        return String.format("jdbc:mysql://%s/Shop", System.getProperty("db.host", "127.0.0.1"));
+        return String.format("jdbc:mysql://%s/Shop", System.getProperty("db.host", "localhost"));
     }
 
     @Bean
