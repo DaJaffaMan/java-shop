@@ -53,16 +53,41 @@ public class RestClientTest {
     }
 
     @Test
-    public void testGetProductPriceHTTPResponse() throws IOException {
-        HttpUriRequest request = new HttpGet("http://localhost:4567/get/price/banana");
+    public void testThrow404HttpResponseOnNonExistantStockUrl() throws IOException {
+        HttpUriRequest request = new HttpGet("http://localhost:4567/get/product/stock/banana");
 
         try {
             HttpResponse response = new DefaultHttpClient().execute(request);
 
             httpEntity = response.getEntity();
 
+            assertEquals(404, response.getStatusLine().getStatusCode());
+        } catch (HTTPException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testGetProductPriceHTTPResponse() throws IOException {
+        HttpUriRequest request = new HttpGet("http://localhost:4567/get/price/banana");
+
+        try {
+            HttpResponse response = new DefaultHttpClient().execute(request);
+
             assertEquals(200, response.getStatusLine().getStatusCode());
-            assertEquals("banana:£1.00", EntityUtils.toString(httpEntity));
+        } catch (HTTPException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testThrow404HttpResponseOnNonExistantPriceUrl() throws IOException {
+        HttpUriRequest request = new HttpGet("http://localhost:4567/get/product/price/banana");
+
+        try {
+            HttpResponse response = new DefaultHttpClient().execute(request);
+
+            assertEquals(404, response.getStatusLine().getStatusCode());
         } catch (HTTPException e) {
             System.out.println(e.getMessage());
         }
