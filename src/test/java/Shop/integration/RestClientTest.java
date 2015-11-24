@@ -4,11 +4,13 @@ import Shop.config.HandlerConfig;
 import Shop.config.ShopConfig;
 import Shop.product.Product;
 import Shop.product.ProductDao;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -25,6 +27,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class RestClientTest {
 
+    HttpEntity httpEntity;
+
     @Before
     public void setup() {
         ApplicationContext context = new AnnotationConfigApplicationContext(HandlerConfig.class, ShopConfig.class);
@@ -39,7 +43,10 @@ public class RestClientTest {
         try {
             HttpResponse response = new DefaultHttpClient().execute(request);
 
-            assertEquals("HTTP/1.1 200 OK", response.getStatusLine().toString());
+            httpEntity = response.getEntity();
+
+            assertEquals(200, response.getStatusLine().getStatusCode());
+            assertEquals("banana:1", EntityUtils.toString(httpEntity));
         } catch (HTTPException e) {
             System.out.println(e.getMessage());
         }
@@ -52,7 +59,10 @@ public class RestClientTest {
         try {
             HttpResponse response = new DefaultHttpClient().execute(request);
 
-            assertEquals("HTTP/1.1 200 OK", response.getStatusLine().toString());
+            httpEntity = response.getEntity();
+
+            assertEquals(200, response.getStatusLine().getStatusCode());
+            assertEquals("banana:£1.00", EntityUtils.toString(httpEntity));
         } catch (HTTPException e) {
             System.out.println(e.getMessage());
         }
@@ -65,7 +75,10 @@ public class RestClientTest {
         try {
             HttpResponse response = new DefaultHttpClient().execute(request);
 
-            assertEquals("HTTP/1.1 200 OK", response.getStatusLine().toString());
+            httpEntity = response.getEntity();
+
+            assertEquals(200, response.getStatusLine().getStatusCode());
+            assertEquals("banana added", EntityUtils.toString(httpEntity));
         } catch (HTTPException e) {
             System.out.println(e.getMessage());
         }
