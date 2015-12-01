@@ -1,8 +1,10 @@
 package Shop.product;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.io.StringWriter;
 import java.sql.*;
 
 /**
@@ -22,6 +24,8 @@ public class ProductDao {
     public Product getProduct(String productId) {
 
         Product product;
+        JSONObject jsonObject = new JSONObject();
+        StringWriter writer = new StringWriter();
 
         try {
 
@@ -33,7 +37,12 @@ public class ProductDao {
             while (result.next()) {
                 product = new Product(result.getString("product_name"), result.getInt("stock"), result.getInt("price"));
 
-                return product;
+                jsonObject.put("product", product);
+
+                jsonObject.write(writer);
+                String jsonText = jsonObject.toString();
+
+                return jsonText;
             }
 
         } catch (SQLException e) {
