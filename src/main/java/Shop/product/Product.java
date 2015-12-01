@@ -1,27 +1,47 @@
 package Shop.product;
 
+import org.json.JSONObject;
+
+import java.io.StringWriter;
+
 /**
  * Created by Jack on 14/11/2015.
  */
 public class Product {
 
-    private final String productName;
-    private final int stock;
-    private final double price;
+    JSONObject jsonObject = new JSONObject();
+    StringWriter writer = new StringWriter();
+    String productName;
+    int stock;
+    double price;
 
     public Product(final String productName, final int stock, final double price) {
+        this.jsonObject.put("item", productName);
+        this.jsonObject.put("stock", stock);
+        this.jsonObject.put("price", price);
+
+        this.productName = productName;
         this.stock = stock;
         this.price = price;
-        this.productName = productName;
+
+        jsonObject.write(writer);
+
     }
 
     public int getStock() {
+        String jsonText = jsonObject.get("stock").toString();
+        int stock = Integer.parseInt(jsonText);
         return stock;
     }
 
     public double getPrice() {
+        String jsonText = jsonObject.get("price").toString();
+        double price = Double.parseDouble(jsonText);
         return price;
     }
 
-    public String getProductName() { return productName; }
+    public String getProductName() {
+        String jsonText = jsonObject.get("item").toString();
+        return jsonText;
+    }
 }

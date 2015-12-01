@@ -24,8 +24,6 @@ public class ProductDao {
     public Product getProduct(String productId) {
 
         Product product;
-        JSONObject jsonObject = new JSONObject();
-        StringWriter writer = new StringWriter();
 
         try {
 
@@ -37,12 +35,7 @@ public class ProductDao {
             while (result.next()) {
                 product = new Product(result.getString("product_name"), result.getInt("stock"), result.getInt("price"));
 
-                jsonObject.put("product", product);
-
-                jsonObject.write(writer);
-                String jsonText = jsonObject.toString();
-
-                return jsonText;
+                return product;
             }
 
         } catch (SQLException e) {
