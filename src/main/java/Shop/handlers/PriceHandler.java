@@ -1,6 +1,7 @@
 package Shop.handlers;
 
 import Shop.product.ProductDao;
+import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
 import spark.Route;
