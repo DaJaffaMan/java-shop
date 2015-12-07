@@ -18,16 +18,18 @@ public class StockHandler implements Route {
     ProductDao productDao;
 
     public StockHandler(ProductDao productDao) {
+
         this.productDao = productDao;
     }
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
 
+        Map map = new HashMap<>();
+        
         String productRequest = request.params(":product");
         int productStock = productDao.getProduct(productRequest).getStock();
 
-        Map map = new HashMap<>();
         map.put(productRequest,productStock);
 
         return gson.toJson(map);

@@ -7,12 +7,15 @@ import spark.Response;
 import spark.Route;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Jack on 16/11/2015.
  */
 public class PriceHandler implements Route {
 
+    Gson gson = new Gson();
     DecimalFormat df = new DecimalFormat("#.00");
     ProductDao productDao;
 
@@ -24,10 +27,14 @@ public class PriceHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
 
+        Map map = new HashMap<>();
+
         String productRequest = request.params(":product");
         double productPrice = productDao.getProduct(productRequest).getPrice();
 
-        return productRequest + ":£" + df.format(productPrice);
+        map.put(productRequest, "£".concat(df.format(productPrice)));
+
+        return gson.toJson(map);
     }
 
 }
