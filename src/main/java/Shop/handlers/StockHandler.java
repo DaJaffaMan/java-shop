@@ -26,11 +26,11 @@ public class StockHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
 
         Map map = new HashMap<>();
-        
+
         String productRequest = request.params(":product");
         int productStock = productDao.getProduct(productRequest).getStock();
 
-        map.put(productRequest,productStock);
+        map.put(productRequest, productStock);
 
         return gson.toJson(map);
     }
