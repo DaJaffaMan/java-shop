@@ -2,9 +2,7 @@ package Shop.config;
 
 import Shop.handlers.AddProductHandler;
 import Shop.handlers.GetProductHandler;
-import Shop.handlers.PriceHandler;
 import Shop.product.ProductDao;
-
 import org.springframework.context.annotation.Bean;
 
 /**

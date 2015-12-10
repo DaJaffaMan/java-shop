@@ -20,7 +20,7 @@ public class AddProductHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         if (Double.parseDouble(request.params(":price")) > 0.00) {
-            productDao.addProduct(new Product(request.params(":product"),Integer.parseInt(request.params(":stock")), Double.parseDouble(request.params(":price"))));
+            productDao.addProduct(new Product(request.params(":product"), Integer.parseInt(request.params(":stock")), Double.parseDouble(request.params(":price"))));
             return request.params(":product") + " added";
         } else {
             return "no price";

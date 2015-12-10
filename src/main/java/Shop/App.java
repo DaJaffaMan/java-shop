@@ -1,14 +1,13 @@
 package Shop;
 
-import static spark.Spark.*;
-
 import Shop.config.HandlerConfig;
 import Shop.config.ShopConfig;
 import Shop.handlers.AddProductHandler;
-import Shop.handlers.PriceHandler;
 import Shop.handlers.GetProductHandler;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import static spark.Spark.*;
 
 /**
  * Created by jack on 28/10/15.
