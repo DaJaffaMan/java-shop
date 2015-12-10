@@ -2,13 +2,11 @@ package Shop;
 
 import static spark.Spark.*;
 
-import java.sql.Connection;
-
 import Shop.config.HandlerConfig;
 import Shop.config.ShopConfig;
+import Shop.handlers.AddProductHandler;
 import Shop.handlers.PriceHandler;
-import Shop.handlers.ProductHandler;
-import Shop.handlers.StockHandler;
+import Shop.handlers.GetProductHandler;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -19,15 +17,14 @@ public class App {
 
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(ShopConfig.class, HandlerConfig.class);
-        StockHandler stockHandler = context.getBean(StockHandler.class);
-        PriceHandler priceHandler = context.getBean(PriceHandler.class);
-        ProductHandler productHandler = context.getBean(ProductHandler.class);
+        GetProductHandler getProductHandler = context.getBean(GetProductHandler.class);
+        AddProductHandler addProductHandler = context.getBean(AddProductHandler.class);
 
-        get("/get/stock/:product", stockHandler);
+        staticFileLocation("/webapp");
 
-        get("/get/price/:product", priceHandler);
+        get("/get/product/:product", getProductHandler);
 
-        post("/add/:product/:stock/:price", productHandler);
+        post("/add/:product/:stock/:price", addProductHandler);
     }
 
 }

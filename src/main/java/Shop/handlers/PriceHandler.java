@@ -30,9 +30,9 @@ public class PriceHandler implements Route {
         Map map = new HashMap<>();
 
         String productRequest = request.params(":product");
-        double productPrice = productDao.getProduct(productRequest).getPrice();
+//        double productPrice = productDao.getProduct(productRequest).getPrice();
 
-        map.put(productRequest, "£".concat(df.format(productPrice)));
+//        map.put(productRequest, "£".concat(df.format(productPrice)));
 
         return gson.toJson(map);
     }

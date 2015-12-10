@@ -9,11 +9,11 @@ import spark.Route;
 /**
  * Created by Jack on 17/11/2015.
  */
-public class ProductHandler implements Route {
+public class AddProductHandler implements Route {
 
     ProductDao productDao;
 
-    public ProductHandler(ProductDao productDao) {
+    public AddProductHandler(ProductDao productDao) {
         this.productDao = productDao;
     }
 

@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import javax.inject.Inject;
 import java.io.StringWriter;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Jack on 14/11/2015.
@@ -21,27 +24,27 @@ public class ProductDao {
     }
 
 
-    public Product getProduct(String productId) {
+    public List<Product> getProduct(String productId) {
 
-        Product product;
+        List<Product> list = new ArrayList<>();
 
         try {
 
-            String query = "select * from shop.product where product_name = ?";
+            String query = "select * from shop.product where product_name like ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, productId);
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
-                product = new Product(result.getString("product_name"), result.getInt("stock"), result.getInt("price"));
 
-                return product;
+                Product product = new Product(result.getString("product_name"), result.getInt("stock"), result.getInt("price"));
+                list.add(product);
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return list;
     }
 
 
