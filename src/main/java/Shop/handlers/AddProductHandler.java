@@ -20,8 +20,12 @@ public class AddProductHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         if (Double.parseDouble(request.params(":price")) > 0.00) {
-            productDao.addProduct(new Product(request.params(":product"), Integer.parseInt(request.params(":stock")), Double.parseDouble(request.params(":price"))));
-            return request.params(":product") + " added";
+            if (productDao.checkProductExists(request.params(":product")) == false) {
+                productDao.addProduct(new Product(request.params(":product"), Integer.parseInt(request.params(":stock")), Double.parseDouble(request.params(":price"))));
+                return request.params(":product") + " added";
+            } else {
+                return "product already exists";
+            }
         } else {
             return "no price";
         }

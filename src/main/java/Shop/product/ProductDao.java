@@ -23,6 +23,7 @@ public class ProductDao {
         this.connection = connection;
     }
 
+    boolean productExists = false;
 
     public List<Product> getProduct(String productId) {
 
@@ -30,39 +31,61 @@ public class ProductDao {
 
         try {
 
-            String query = "select * from shop.product where product_name like ?";
+            String query = "select * from shop.product where product_name like '%' || ? || '%'";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, productId);
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
-
                 Product product = new Product(result.getString("product_name"), result.getInt("stock"), result.getInt("price"));
                 list.add(product);
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return list;
     }
 
+    public boolean checkProductExists(String productId) {
+        productExists = false;
+        try {
+
+            String query = "select * from shop.product where product_name = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, productId);
+            ResultSet result = preparedStatement.executeQuery();
+            while (result.next()) {
+                String productName = result.getString("product_name");
+                if (productName.equals(productId)) {
+                    productExists = true;
+                } else {
+                    productExists = false;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return productExists;
+    }
 
     public void addProduct(Product product) {
 
         String query = "insert into product(product_name, stock, price) values(?, ?, ?)";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, product.getProductName());
-            preparedStatement.setInt(2, product.getStock());
-            preparedStatement.setDouble(3, product.getPrice());
+        if (productExists == false) {
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, product.getProductName());
+                preparedStatement.setInt(2, product.getStock());
+                preparedStatement.setDouble(3, product.getPrice());
 
-            preparedStatement.execute();
+                preparedStatement.execute();
 
-        } catch (Exception e) {
-            System.err.println("Got an exception!");
-            System.err.println(e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Got an exception!");
+                System.err.println(e.getMessage());
+            }
         }
     }
 }

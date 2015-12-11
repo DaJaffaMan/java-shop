@@ -31,5 +31,6 @@ public class GetProductHandler implements Route {
         products = productDao.getProduct(productRequest);
 
         return gson.toJson(products);
+
     }
 }
