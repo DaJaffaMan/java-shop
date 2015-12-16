@@ -23,8 +23,6 @@ public class ProductDao {
         this.connection = connection;
     }
 
-    boolean productExists = false;
-
     public List<Product> getProduct(String productId) {
 
         List<Product> list = new ArrayList<>();
@@ -46,18 +44,18 @@ public class ProductDao {
         return list;
     }
 
-    public boolean checkProductExists(String productId) {
-        productExists = false;
+    public boolean doesProductExists(String productId) {
+        boolean productExists = false;
         try {
 
-            String query = "select * from shop.product where product_name = ?";
+            String query = "select count(*) from shop.product where product_name = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, productId);
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
-                String productName = result.getString("product_name");
-                if (productName.equals(productId)) {
+                int productCount = result.getInt(1);
+                if (productCount > 0) {
                     productExists = true;
                 } else {
                     productExists = false;
@@ -73,19 +71,17 @@ public class ProductDao {
 
         String query = "insert into product(product_name, stock, price) values(?, ?, ?)";
 
-        if (productExists == false) {
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, product.getProductName());
-                preparedStatement.setInt(2, product.getStock());
-                preparedStatement.setDouble(3, product.getPrice());
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, product.getProductName());
+            preparedStatement.setInt(2, product.getStock());
+            preparedStatement.setDouble(3, product.getPrice());
 
-                preparedStatement.execute();
+            preparedStatement.execute();
 
-            } catch (Exception e) {
-                System.err.println("Got an exception!");
-                System.err.println(e.getMessage());
-            }
+        } catch (Exception e) {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
         }
     }
 

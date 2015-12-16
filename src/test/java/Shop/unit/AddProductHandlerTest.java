@@ -6,6 +6,7 @@ import Shop.config.ShopConfig;
 import Shop.handlers.AddProductHandler;
 import Shop.handlers.DeleteProductHandler;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -34,6 +35,12 @@ public class AddProductHandlerTest {
     ApplicationContext context = new AnnotationConfigApplicationContext(HandlerConfig.class, ShopConfig.class);
     AddProductHandler addProductHandler = context.getBean(AddProductHandler.class);
     DeleteProductHandler deleteProductHandler = context.getBean(DeleteProductHandler.class);
+
+
+//    @Before
+//    public void setup() {
+//
+//    }
 
     @Test
     public void testAddItem() throws Exception {

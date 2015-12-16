@@ -20,7 +20,7 @@ public class DeleteProductHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
 
         String productRequest = request.params(":product");
-        if (productDao.checkProductExists(request.params(":product")) == true) {
+        if (productDao.doesProductExists(request.params(":product")) == true) {
             productDao.deleteProduct(productRequest);
             return request.params(":product") + " removed";
         } else {
