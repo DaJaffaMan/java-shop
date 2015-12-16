@@ -31,10 +31,10 @@ public class ProductDao {
 
         try {
 
-            String query = "select * from shop.product where product_name like '%' || ? || '%'";
+            String query = "select * from shop.product where product_name like ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, productId);
+            preparedStatement.setString(1, "%" + productId + "%");
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 Product product = new Product(result.getString("product_name"), result.getInt("stock"), result.getInt("price"));
@@ -86,6 +86,20 @@ public class ProductDao {
                 System.err.println("Got an exception!");
                 System.err.println(e.getMessage());
             }
+        }
+    }
+
+    public void deleteProduct(String productId) {
+        try {
+
+            String query = "delete from shop.product where product_name = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, productId);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }
