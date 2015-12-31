@@ -29,7 +29,7 @@ public class ProductDao {
 
         try {
 
-            String query = "select * from product where product_name like ?";
+            String query = "select * from shop.product where product_name like ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "%" + productId + "%");
@@ -48,7 +48,7 @@ public class ProductDao {
         boolean productExists = false;
         try {
 
-            String query = "select count(*) from product where product_name = ?";
+            String query = "select count(*) from shop.product where product_name = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, productId);
@@ -69,7 +69,7 @@ public class ProductDao {
 
     public void addProduct(Product product) {
 
-        String query = "insert into product(product_name, stock, price) values(?, ?, ?)";
+        String query = "insert into shop.product(product_name, stock, price) values(?, ?, ?)";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -88,7 +88,7 @@ public class ProductDao {
     public void deleteProduct(String productId) {
         try {
 
-            String query = "delete from product where product_name = ?";
+            String query = "delete from shop.product where product_name = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, productId);

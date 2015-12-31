@@ -25,5 +25,5 @@ public class App {
 
         post("/add/:product/:stock/:price", addProductHandler);
     }
-    
+
 }
