@@ -1,16 +1,16 @@
-<!DOCTYPE html ng-app>
-<html lang="en">
+<html lang="en" ng-app="productApp">
+
 <head>
     <meta charset="UTF-8">
     <title>Web-app</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/controller.js"></script>
+    <script src="/js/product-service.js"></script>
 </head>
-<body>
 
+<body>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -18,19 +18,26 @@
         </div>
         <div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Show Product</a></li>
-                <li><a href="#">Add Product</a></li>
-                <li><a href="#">Contact Me</a></li>
+                <li class="active"><a href="#">Home</a>
+                </li>
+                <li><a href="#">Show Product</a>
+                </li>
+                <li><a href="#">Add Product</a>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
-
-<input type="text" id="product">
-
 <div ng-controller="productController">
-<button ngClick="getProduct()">Get Product</button>
+    <input type="text" ng-model="product" placeholder="product name">
+    <button ng-click="getProduct()">Get Product</button>
+    <p>{{productData}}</p>
+
+    <input type="text" ng-model="product_name" placeholder="product name">
+    <input type="text" ng-model="product_stock" placeholder="product stock">
+    <input type="text" ng-model="product_price" placeholder="product price">
+    <button ng-click="addProduct()">Add Product</button>
 </div>
 </body>
+
 </html>
