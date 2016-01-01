@@ -9,17 +9,19 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import static spark.Spark.*;
 
-/**
- * Created by jack on 28/10/15.
- */
 public class App {
 
     public static void main(String[] args) {
+
+        String appPort = System.getProperty("app.port", "5000");
+
         ApplicationContext context = new AnnotationConfigApplicationContext(ShopConfig.class, HandlerConfig.class);
         GetProductHandler getProductHandler = context.getBean(GetProductHandler.class);
         AddProductHandler addProductHandler = context.getBean(AddProductHandler.class);
 
         staticFileLocation("/webapp");
+
+        port(Integer.valueOf(appPort));
 
         get("/get/product/:product", getProductHandler);
 
