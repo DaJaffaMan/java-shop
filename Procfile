@@ -1,1 +1,1 @@
-web: java -jar target/Shop-1.0-SNAPSHOT.jar -Dapp.port=$PORT
+web: java -Dapp.port=$PORT -jar target/Shop-1.0-SNAPSHOT.jar
