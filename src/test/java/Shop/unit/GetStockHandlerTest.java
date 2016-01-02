@@ -17,12 +17,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import spark.Request;
 import spark.Response;
 
+import java.sql.Connection;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by Jack on 16/11/2015.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class GetStockHandlerTest {
 
@@ -31,13 +30,20 @@ public class GetStockHandlerTest {
     @Mock
     private Response response;
 
-    ApplicationContext context = new AnnotationConfigApplicationContext(HandlerConfig.class, ShopConfig.class);
-    GetProductHandler getProductHandler = context.getBean(GetProductHandler.class);
-    DeleteProductHandler deleteProductHandler = context.getBean(DeleteProductHandler.class);
+    ApplicationContext context;
+    GetProductHandler getProductHandler;
+    DeleteProductHandler deleteProductHandler;
+    Connection connection;
+    ProductDao productDao;
 
     @Before
     public void setup() {
-        ProductDao productDao = context.getBean(ProductDao.class);
+        context = new AnnotationConfigApplicationContext(HandlerConfig.class, ShopConfig.class);
+        getProductHandler = context.getBean(GetProductHandler.class);
+        connection = context.getBean(Connection.class);
+        deleteProductHandler = context.getBean(DeleteProductHandler.class);
+
+        productDao = context.getBean(ProductDao.class);
         productDao.addProduct(new Product("testproduct", 1, 1.00));
         productDao.addProduct(new Product("tstproduct", 0, 1.00));
     }
@@ -60,9 +66,6 @@ public class GetStockHandlerTest {
 
     @After
     public void teardown() throws Exception {
-        when(request.params(":product")).thenReturn("testproduct");
-        deleteProductHandler.handle(request, response);
-        when(request.params(":product")).thenReturn("tstproduct");
-        deleteProductHandler.handle(request, response);
+        connection.createStatement().execute("DROP SCHEMA shop");
     }
 }
