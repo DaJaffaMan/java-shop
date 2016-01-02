@@ -1,10 +1,10 @@
 package Shop.config;
 
-import Shop.product.Product;
 import Shop.product.ProductDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
@@ -16,12 +16,12 @@ import java.sql.SQLException;
 @ComponentScan
 public class ShopConfig {
 
-    @Bean
-    public DataSource dataSource() {
+    @Bean(destroyMethod = "shutdown")
+    public EmbeddedDatabase dataSource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder
                 .setType(EmbeddedDatabaseType.H2)
-                .addScripts("db/sql/create-schema.sql", "db/sql/create-db.sql")
+                .addScripts("db/sql/create-schema.sql", "db/sql/create-table.sql")
                 .build();
     }
 

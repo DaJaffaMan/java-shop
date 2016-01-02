@@ -1,60 +1,57 @@
 package Shop.integration;
 
-import Shop.config.HandlerConfig;
-import Shop.config.ShopConfig;
-import Shop.product.Product;
-import Shop.product.ProductDao;
+import Shop.App;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static spark.Spark.stop;
 
-/**
- * Created by Jack on 23/11/2015.
- */
 public class RestClientTest {
 
-    HttpEntity httpEntity;
-    ApplicationContext context = new AnnotationConfigApplicationContext(HandlerConfig.class, ShopConfig.class);
+    CloseableHttpClient httpClient;
+    HttpResponse httpResponse;
 
     @Before
     public void setup() {
-        ProductDao productDao = context.getBean(ProductDao.class);
-        productDao.addProduct(new Product("testproduct", 1, 1));
+        httpClient = HttpClientBuilder.create().build();
+        App.main(null);
     }
 
     @Test
     public void testGetProductHTTPResponse() throws IOException {
-        HttpUriRequest request = new HttpGet("http://localhost:4567/get/product/testproduct");
+
+        HttpUriRequest addProductRequest = new HttpPost("http://localhost:5000/add/testproduct/1/1");
+        HttpUriRequest getProductRequest = new HttpGet("http://localhost:5000/get/product/testproduct");
 
         try {
-            HttpResponse response = new DefaultHttpClient().execute(request);
+            httpClient.execute(addProductRequest);
+            httpResponse = httpClient.execute(getProductRequest);
 
-            assertEquals(200, response.getStatusLine().getStatusCode());
+            assertEquals(200, httpResponse.getStatusLine().getStatusCode());
         } catch (HTTPException e) {
             System.out.println(e.getMessage());
         }
     }
 
     @Test
-    public void testThrow404HttpResponseOnNonExistantProductUrl() throws IOException {
-        HttpUriRequest request = new HttpGet("http://localhost:4567/notgetting/product/testproduct");
+    public void testThrow404HttpResponseOnNonExistantUrl() throws IOException {
+        HttpUriRequest request = new HttpGet("http://localhost:5000/notgetting/product/testproduct");
 
         try {
-            HttpResponse response = new DefaultHttpClient().execute(request);
+            HttpResponse response = httpClient.execute(request);
 
             assertEquals(404, response.getStatusLine().getStatusCode());
         } catch (HTTPException e) {
@@ -64,15 +61,15 @@ public class RestClientTest {
 
     @Test
     public void testAddProductHTTPResponse() throws IOException {
-        HttpUriRequest request = new HttpPost("http://localhost:4567/add/tstproduct/1/1");
+        HttpUriRequest request = new HttpPost("http://localhost:5000/add/testproduct/1/1");
 
         try {
-            HttpResponse response = new DefaultHttpClient().execute(request);
 
-            httpEntity = response.getEntity();
+            HttpResponse response = httpClient.execute(request);
+            HttpEntity httpEntity = response.getEntity();
 
             assertEquals(200, response.getStatusLine().getStatusCode());
-            assertEquals("tstproduct added", EntityUtils.toString(httpEntity));
+            assertEquals("testproduct added", EntityUtils.toString(httpEntity));
         } catch (HTTPException e) {
             System.out.println(e.getMessage());
         }
@@ -80,8 +77,8 @@ public class RestClientTest {
 
     @After
     public void teardown() throws Exception {
-        ProductDao productDao = context.getBean(ProductDao.class);
-        productDao.deleteProduct("testproduct");
-        productDao.deleteProduct("tstproduct");
+        httpClient.close();
+        stop();
+        App.shutdown();
     }
 }

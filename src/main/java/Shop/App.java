@@ -4,18 +4,19 @@ import Shop.config.HandlerConfig;
 import Shop.config.ShopConfig;
 import Shop.handlers.AddProductHandler;
 import Shop.handlers.GetProductHandler;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static spark.Spark.*;
 
 public class App {
 
+    private static AnnotationConfigApplicationContext context;
+
     public static void main(String[] args) {
 
         String appPort = System.getProperty("app.port", "5000");
 
-        ApplicationContext context = new AnnotationConfigApplicationContext(ShopConfig.class, HandlerConfig.class);
+        context = new AnnotationConfigApplicationContext(ShopConfig.class, HandlerConfig.class);
         GetProductHandler getProductHandler = context.getBean(GetProductHandler.class);
         AddProductHandler addProductHandler = context.getBean(AddProductHandler.class);
 
@@ -26,6 +27,11 @@ public class App {
         get("/get/product/:product", getProductHandler);
 
         post("/add/:product/:stock/:price", addProductHandler);
+    }
+
+    public static void shutdown() {
+        stop();
+        context.close();
     }
 
 }
