@@ -1,4 +1,4 @@
-CREATE TABLE shop.product (
+CREATE TABLE IF NOT EXISTS shop.product (
   `product_name` varchar(255) DEFAULT NULL,
   `stock` decimal(10,0) DEFAULT NULL,
   `price` decimal(10,0) DEFAULT NULL
