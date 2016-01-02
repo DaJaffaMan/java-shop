@@ -10,9 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Jack on 14/11/2015.
- */
 @Component
 public class ProductDao {
 
@@ -55,11 +52,7 @@ public class ProductDao {
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 int productCount = result.getInt(1);
-                if (productCount > 0) {
-                    productExists = true;
-                } else {
-                    productExists = false;
-                }
+                productExists = productCount > 0;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

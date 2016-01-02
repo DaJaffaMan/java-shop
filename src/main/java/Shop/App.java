@@ -14,15 +14,14 @@ public class App {
 
     public static void main(String[] args) {
 
-        String appPort = System.getProperty("app.port", "5000");
-
         context = new AnnotationConfigApplicationContext(ShopConfig.class, HandlerConfig.class);
-        GetProductHandler getProductHandler = context.getBean(GetProductHandler.class);
-        AddProductHandler addProductHandler = context.getBean(AddProductHandler.class);
+        final GetProductHandler getProductHandler = context.getBean(GetProductHandler.class);
+        final AddProductHandler addProductHandler = context.getBean(AddProductHandler.class);
+
+        final String appPort = System.getProperty("app.port", "5000");
+        port(Integer.valueOf(appPort));
 
         staticFileLocation("/webapp");
-
-        port(Integer.valueOf(appPort));
 
         get("/get/product/:product", getProductHandler);
 

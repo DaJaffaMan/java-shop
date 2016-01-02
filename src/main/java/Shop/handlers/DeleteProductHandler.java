@@ -5,12 +5,9 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-/**
- * Created by Jack on 14/12/2015.
- */
 public class DeleteProductHandler implements Route {
 
-    ProductDao productDao;
+    private final ProductDao productDao;
 
     public DeleteProductHandler(ProductDao productDao) {
         this.productDao = productDao;
@@ -20,7 +17,7 @@ public class DeleteProductHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
 
         String productRequest = request.params(":product");
-        if (productDao.doesProductExists(request.params(":product")) == true) {
+        if (productDao.doesProductExists(request.params(":product"))) {
             productDao.deleteProduct(productRequest);
             return request.params(":product") + " removed";
         } else {

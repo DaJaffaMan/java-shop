@@ -7,28 +7,23 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Jack on 16/11/2015.
- */
 public class GetProductHandler implements Route {
 
-    Gson gson = new Gson();
-    ProductDao productDao;
+    private final Gson gson;
+    private final ProductDao productDao;
 
     public GetProductHandler(ProductDao productDao) {
-
+        gson = new Gson();
         this.productDao = productDao;
     }
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
 
-        List<Product> products = new ArrayList<>();
         String productRequest = request.params(":product");
-        products = productDao.getProduct(productRequest);
+        List<Product> products = productDao.getProduct(productRequest);
 
         return gson.toJson(products);
 

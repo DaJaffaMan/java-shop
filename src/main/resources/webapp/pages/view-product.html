@@ -22,7 +22,18 @@
 <div ng-controller="productController">
     <input type="text" ng-model="product" placeholder="product name">
     <button ng-click="getProduct()">Get Product</button>
-    <p>{{productData}}</p>
+    <table class="table">
+        <tr>
+            <th>Product Name</th>
+            <th>Stock</th>
+            <th>Price</th>
+        </tr>
+        <tr ng-repeat="product in productData">
+            <td>{{product.productName}}</td>
+            <td>{{product.stock}}</td>
+            <td>{{product.price}}</td>
+        </tr>
+    </table>
 </div>
 
 </body>
