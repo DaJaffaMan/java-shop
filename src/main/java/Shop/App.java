@@ -1,6 +1,5 @@
 package Shop;
 
-import Shop.config.HandlerConfig;
 import Shop.config.ShopConfig;
 import Shop.handlers.AddProductHandler;
 import Shop.handlers.GetProductHandler;
@@ -14,7 +13,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        context = new AnnotationConfigApplicationContext(ShopConfig.class, HandlerConfig.class);
+        context = new AnnotationConfigApplicationContext(ShopConfig.class);
         final GetProductHandler getProductHandler = context.getBean(GetProductHandler.class);
         final AddProductHandler addProductHandler = context.getBean(AddProductHandler.class);
 

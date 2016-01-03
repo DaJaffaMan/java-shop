@@ -1,6 +1,5 @@
 package Shop.unit;
 
-import Shop.config.HandlerConfig;
 import Shop.config.ShopConfig;
 import Shop.handlers.DeleteProductHandler;
 import Shop.handlers.GetProductHandler;
@@ -38,7 +37,7 @@ public class GetStockHandlerTest {
 
     @Before
     public void setup() {
-        context = new AnnotationConfigApplicationContext(HandlerConfig.class, ShopConfig.class);
+        context = new AnnotationConfigApplicationContext(ShopConfig.class);
         getProductHandler = context.getBean(GetProductHandler.class);
         connection = context.getBean(Connection.class);
         deleteProductHandler = context.getBean(DeleteProductHandler.class);

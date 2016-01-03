@@ -1,6 +1,5 @@
 package Shop.config;
 
-import Shop.product.ProductDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @Configuration
-@ComponentScan
+@ComponentScan({"Shop.product","Shop.handlers"})
 public class ShopConfig {
 
     @Bean(destroyMethod = "shutdown")
@@ -28,10 +27,5 @@ public class ShopConfig {
     @Bean
     public Connection connection(DataSource dataSource) throws SQLException {
         return dataSource.getConnection();
-    }
-
-    @Bean
-    public ProductDao productDao(Connection connection) {
-        return new ProductDao(connection);
     }
 }

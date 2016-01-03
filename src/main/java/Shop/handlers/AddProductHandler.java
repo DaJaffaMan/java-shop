@@ -2,14 +2,19 @@ package Shop.handlers;
 
 import Shop.product.Product;
 import Shop.product.ProductDao;
+import org.springframework.stereotype.Component;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import javax.inject.Inject;
+
+@Component
 public class AddProductHandler implements Route {
 
     private final ProductDao productDao;
 
+    @Inject
     public AddProductHandler(ProductDao productDao) {
         this.productDao = productDao;
     }

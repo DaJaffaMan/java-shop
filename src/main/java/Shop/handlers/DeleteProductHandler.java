@@ -1,14 +1,19 @@
 package Shop.handlers;
 
 import Shop.product.ProductDao;
+import org.springframework.stereotype.Component;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import javax.inject.Inject;
+
+@Component
 public class DeleteProductHandler implements Route {
 
     private final ProductDao productDao;
 
+    @Inject
     public DeleteProductHandler(ProductDao productDao) {
         this.productDao = productDao;
     }
