@@ -71,6 +71,7 @@ public class ProductDao {
             preparedStatement.setDouble(3, product.getPrice());
 
             preparedStatement.execute();
+            connection.commit();
 
         } catch (Exception e) {
             System.err.println("Got an exception!");
@@ -86,6 +87,7 @@ public class ProductDao {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, productId);
             preparedStatement.executeUpdate();
+            connection.commit();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
