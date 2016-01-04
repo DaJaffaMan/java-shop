@@ -32,7 +32,7 @@ public class ProductDao {
             preparedStatement.setString(1, "%" + productId + "%");
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
-                Product product = new Product(result.getString("product_name"), result.getInt("stock"), result.getInt("price"));
+                Product product = new Product(result.getString("product_name"), result.getInt("stock"), result.getDouble("price"));
                 list.add(product);
             }
         } catch (SQLException e) {
