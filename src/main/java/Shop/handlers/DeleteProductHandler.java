@@ -1,6 +1,6 @@
 package Shop.handlers;
 
-import Shop.product.ProductDao;
+import Shop.product.dao.ProductDao;
 import org.springframework.stereotype.Component;
 import spark.Request;
 import spark.Response;

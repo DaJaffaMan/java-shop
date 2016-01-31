@@ -1,7 +1,7 @@
 package Shop.handlers;
 
 import Shop.product.Product;
-import Shop.product.ProductDao;
+import Shop.product.dao.ProductDao;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Component;
 import spark.Request;

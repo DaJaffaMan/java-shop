@@ -4,7 +4,7 @@ import Shop.config.ShopConfig;
 import Shop.handlers.DeleteProductHandler;
 import Shop.handlers.GetProductHandler;
 import Shop.product.Product;
-import Shop.product.ProductDao;
+import Shop.product.dao.ProductDao;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

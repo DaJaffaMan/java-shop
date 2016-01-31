@@ -1,5 +1,6 @@
-package Shop.product;
+package Shop.product.dao;
 
+import Shop.product.Product;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -11,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ProductDao {
+public class ProductDaoImpl implements ProductDao {
 
     private final Connection connection;
 
     @Inject
-    public ProductDao(Connection connection) {
+    public ProductDaoImpl(Connection connection) {
         this.connection = connection;
     }
 
@@ -93,4 +94,5 @@ public class ProductDao {
             throw new RuntimeException(e);
         }
     }
+
 }
